@@ -1,0 +1,359 @@
+---
+title: "Day1"
+author: "Afsar Ali"
+output:
+  prettydoc::html_pretty:
+    theme: Cayman
+    highlight: github
+    df_print: paged
+    toc: yes
+    toc_depth: '4'
+---
+
+```{r echo=TRUE}
+# Course: Applied-Data-Analytics-EMSE-6767-D18
+# Title: Day 1
+# Purpose: Day 1 Draft
+# Author: Afsar Ali
+```
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# scatter.R
+x = c(195,180,220,160,200,220,200,183,139,155)
+y = c(130,128,138,122,140,148,142,127,116,123)
+#To plot the data in a scatter plot
+plot(x, y, pch = 20, cex = 2, main = 'Scatterplot for Cholesterol Level and Systolic Blood Pressure Data', xlab = 'Cholesterol Level', ylab = 'Systolic Blood Pressure')
+#To add a trend line
+abline(lm(y ~ x), col = 'red')
+#To calculate the Pearson correlation coefficient
+pearson_cor = cor(x, y)
+
+
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# pie_chart.R
+Freq = c(86, 182, 83, 10)
+#To label categories
+Process = c('Initial cuto', 'Turning', 'Drilling', 'Assembly')
+#To calculate percentages
+Percents = round(Freq/sum(Freq)*100,1)
+label = paste(Percents, '%', sep=' ') # add % sign to labels
+#Pie Chart with percentages
+pie(Freq, labels = label, col=c(2,3,4,5), main='Pie Chart of Process Steps')
+#To add a legend
+legend('topleft', Process, col=c(2,3,4,5), pch=15)
+
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# measures_position.R
+
+x = c(17,12,12,14,15,16,16,16,16,17,17,18,18,18,19,19,20, 20,20,20,20,20,20,20,21,21,21,22,22,23,23,23,24,24,25,26, 26,28,28,28)
+#To concatenate resulting mean, standard deviation, variance, and coeficient of variation
+ stats = c(mean(x), sd(x), var(x), 100*sd(x)/mean(x))
+#To obtain quartiles including min and max
+q = quantile(x)
+#To obtain the range we find Max-Min
+ran = range(x)[2]-range(x)[1]
+ran
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# histogram.R
+SurvTime = c(60,100,130,100,115,30,60,145,75,80,89,57,64,92,87,110,180,195,175,179,159,155,
+             146,157,167,174,87,67,73,109,123,135,129,141,154,166,179,37,49,68,74,89,87,109,119,125,56,39,49,190)
+#To plot the histogram
+hist(SurvTime, breaks=seq(30,198, by=24), main='Histogram of Survival Time', xlab='Survival Time', ylab='Frequency', col='grey', right = FALSE)
+#To obtain the cumulative histogram, we replace cell frequencies by their cumulative frequencies
+h = hist(SurvTime, breaks=seq(30,198, by=24), right = FALSE)
+h$counts = cumsum(h$counts)
+#To plot the cumulative histogram
+plot(h, main='Cumulative Histogram', xlab='Survival Time', ylab='Cumulative Frequency', col='grey')
+
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# frequency_distribution_rod.R
+
+#Assign given data to the variable RodData
+RodData = c(145,140,120,110,135,150,130,132,137,115,142,115,130,124,139,133,118,127,144 ,143,131,120,117,129,148,130,121,136,133,147,147,128,142,147,152,122,120,145, 126,151)
+#To dene the intervals
+breaks = seq(110, 152, by=7)
+#To assign each observation to its interval
+RodData.split = cut(RodData, breaks, right=FALSE)
+#To obtain the frequency of data in each class
+RodData.freq = table(RodData.split)
+#To combine necessary columns
+freq.dist = cbind(RodData.freq,100*RodData.freq/ sum(RodData.freq),cumsum(RodData.freq),100*cumsum(RodData.freq )/sum(RodData.freq))
+#To name the table columns
+colnames(freq.dist) = c('Frequency','Percentage', 'Cum.Frequency','Cum.Percentage')
+freq.dist
+
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# frequency_distribution.R
+
+#Assign given data to the variable data
+data =c(4,3,5,3,4,1,2,3,4,3,1,5,3,4,2,1,1,4,5,3,2,5,
+        2,5,2,1,2,3,3,2,1,5,3,2,1,1,2,1,2,4,5,3,5,1,3,1,2,1,4,
+        1,4,5,4,1,1,2,4,1,4,1,2,4,3,4,1,4,1,4,1,2,1,5,3,1,5,2,
+        1,2,3,1,2,2,1,1,2,1,5,3,2,5,5,2,5,3,5,2,3,2,3,5,2,3,5,
+        5,2,3,2,5,1,4)
+
+#To get frequencies
+data.freq = table(data)
+#To combine necessary columns
+freq.dist = cbind(data.freq, cumsum(data.freq), 100*cumsum(data.freq)/sum(data.freq))
+#To name the table columns
+colnames(freq.dist) = c('Frequency','Cum.Frequency','Cum Percentage')
+freq.dist
+
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# boxplots.R
+
+NoiseLevels = c(75,79,80,85,88,89,95,96,97,99,104,105,110,115,140)
+#To plot boxplot
+boxplot(NoiseLevels, main = 'Box plot of Noise Levels (dB)', ylab = 'Noise Levels (dB)', col ='grey')
+
+boxplot(NoiseLevels, horizontal = TRUE, main = 'Box plot of Noise Levels (dB)', ylab = 'Noise Levels (dB)', col ='grey')
+
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# bar_chart.R
+
+DefectTypes = c(2,1,3,1,2,1,5,4,3,1,2,3,4,3,1,5,2,3,
+                1,2,3,5,4,3,1,5,1,4,2,3,2,1,2,5,4,2,4,2,5,1,2,1,2,1,5, 2,1,3,1,4)
+#To obtain the frequencies
+counts = table(DefectTypes)
+#To obtain the bar chart
+barplot(counts, xlab='Defect type', ylab='Frequency')
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Clear working environment
+#m(list=ls(all=TRUE))
+# The tidyverse package contains ggplot2, tibble, tidyr, readr, purr, and dplyr among others
+library(tidyverse)
+# The gridExtra package contains grid.arrange function used to combine plots
+library(gridExtra)
+# The GGally package contains ggpairs which is a custom correlation graph for ggplot2
+library(GGally)
+# Load gridExtra so can plot more than one graph with grid.arrange
+library(gridExtra)
+#load other packages
+library(psych)
+
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#Load and Review data
+dat <- read.csv("ECON5100_project_data.csv", header = TRUE)
+
+
+#Make a subset of relevent data
+dat1 <- select(dat, "AT","NI", "CH", "DLTT", "PRCH_C", "PRCL_C", "TDC2", "SALARY", "BONUS", "OTHCOMP", "AGE", "GENDER")
+dat1<-  mutate (dat1, ageg = cut(AGE, 6)) #grouping age by 6
+datm <- dat1 %>%  filter(GENDER =="MALE") #male only
+datf <- dat1 %>%  filter(GENDER =="FEMALE") #female only
+
+#attach the file for use
+attach(dat1)
+```
+
+##Executive Summary
+
+The focus of this analysis is to determine compensation of Chief Executive Officers (CEOs) in US publicly traded companies by age and gender. The data set is consisted of 114 factors (columns) and 8300 data points (rows). Following are the initial exploratory data analysis.
+
+
+###Age and Gender Distribution
+Let's explore Salary and Gender Distribution by Age
+
++ The CEO Compensation Data shows:
+    - 93% of the CEOs are middle-aged men
+    - Only 508 Female CEOs
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+grid.arrange(
+ggplot(dat, aes(x = AGE, y = SALARY, color = GENDER)) +
+  geom_point() +
+  stat_density2d() +
+  ggtitle("Mostly Middle aged Men", sub = "Small number of Female observations"),
+ggplot(dat, aes(x = AGE, y = SALARY, color = GENDER)) +
+  geom_point() +
+  stat_density2d(aes(fill =..density..), geom = "raster", contour = FALSE) +
+  ggtitle("Mostly Middle aged Men", sub = "Heat map, light color indicates more observations"),
+ncol = 2
+)
+```
+
+
+###CEO Average Compensation by Gender and Age group
+
++ Male CEO has larger outliers
++ Average female compensation seems lower than men
+
+Let's look closely to find deeper insight
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+ggplot(dat1, aes(ageg, TDC2, fill= GENDER)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  labs(fill = "Gender") +
+# Add and improve titles and labels
+    ggtitle("Average female compensation seems lower than men") +
+    ylab("Average Compensation by Thousands") +
+    xlab("Age Group") +
+    scale_x_discrete(labels=c("Under 40", "40 to 51", "51 to 62", "62 to 73", "73 to 84", "84 +", "NA")) +
+     ylim(-5000, 30000)
+
+
+```
+
+
+###Male Vs Female Average Compensation
+Let's look at the difference in compensation by Gender
+
++ Older females has higher compensation although they account for very small share of our observation
++ Middle age males has higher compensation
+
+Why are older females observed to have higher compensation?
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+grid.arrange(
+#Male Data
+datf %>%
+  group_by(ageg) %>%
+  summarise(Avg_Com = mean(TDC2)) %>%
+  ggplot(aes(x = ageg, y = Avg_Com, )) +
+  geom_bar(stat="identity", position = "dodge", color = "black") +
+  labs(fill = "Gender") +
+# Add and improve titles and labels
+    ggtitle("Older female higher compensation") +
+    ylab("Average Compensation by Thousands") +
+    xlab("Female Age Group") +
+    scale_x_discrete(labels=c("Under 40", "40 to 51", "51 to 62", "62 to 73", "73 to 84", "84 +", "NA")) +
+    ylim(0, 6000) +
+ theme_classic() +
+  theme(axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),),
+#Female Data
+datm %>%
+  group_by(ageg) %>%
+  summarise(Avg_Com = mean(TDC2)) %>%
+  ggplot(aes(x = ageg, y = Avg_Com, )) +
+  geom_bar(stat="identity", position = "dodge", color = "black") +
+  labs(fill = "Gender") +
+# Add and improve titles and labels
+    ggtitle("Middle-age males higher compensation") +
+    ylab("Average Compensation by Thousands") +
+    xlab("Male Age Group") +
+    scale_x_discrete(labels=c("Under 40", "40 to 51", "51 to 62", "62 to 73", "73 to 84", "84 +", "NA")) +
+  ylim(0, 6000) +
+
+
+  theme_classic() +
+  theme(  axis.ticks.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank()),
+     #     panel.background = element_blank()),
+ncol = 2
+)
+```
+
+###Average compensation for both genders
+Let's compare total compensation side by side
++ There are no female executives over 84
++ Female age group has larger growth from 62-73 to 73-84
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Average profit by region and category
+dat1 %>%
+  group_by(ageg, GENDER) %>%
+  summarise(Avg_Com = mean(TDC2)) %>%
+  ggplot(aes(x = ageg, y = Avg_Com, fill = reorder(GENDER, desc(Avg_Com)))) +
+  geom_bar(stat="identity", position = "dodge", color = "black") +
+  geom_hline(yintercept = 0, color = "black") +
+  labs(fill = "Gender") +
+# Add and improve titles and labels
+    ggtitle("Middle age female age groups has a high compensation") +
+    ylab("Average Compensation by Thousands") +
+    xlab("Age Group") +
+    scale_x_discrete(labels=c("Under 40", "40 to 51", "51 to 62", "62 to 73", "73 to 84", "84 +", "NA")) +
+    scale_fill_manual(values = c("blue", "grey70"))+
+ theme_classic() +
+  theme(axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),)
+
+```
+
+###Older females observed to have significantly higher bonus
++ Older females receive high bonus compared to males and other females
++ Older females high bonus makes the largest impact on why older females observed to have higher compensation.
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+grid.arrange(
+#Male Data
+
+datf %>%
+  group_by(ageg) %>%
+  summarise(Avg_Com = mean(BONUS)) %>%
+  ggplot(aes(x = ageg, y = Avg_Com, )) +
+  geom_bar(stat="identity", position = "dodge", color = "black") +
+# Add and improve titles and labels
+    ggtitle("Female 73 to 84 gets a large Bonus") +
+    ylab("Average Bonus by Thousands") +
+    xlab("Female Age Group") +
+    scale_x_discrete(labels=c("Under 40", "40 to 51", "51 to 62", "62 to 73", "73 to 84", "84 +", "NA")) +
+    ylim(0, 2000) +
+
+
+ theme_classic() +
+  theme(axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),),
+#Female Data
+datm %>%
+  group_by(ageg) %>%
+  summarise(Avg_Com = mean(BONUS)) %>%
+  ggplot(aes(x = ageg, y = Avg_Com, )) +
+  geom_bar(stat="identity", position = "dodge", color = "black") +
+# Add and improve titles and labels
+    ggtitle("Male Bonus similar accross age group") +
+    ylab("Average Compensation by Thousands") +
+    xlab("Male Age Group") +
+    scale_x_discrete(labels=c("Under 40", "40 to 51", "51 to 62", "62 to 73", "73 to 84", "84 +", "NA")) +
+  ylim(0, 2000) +
+
+
+  theme_classic() +
+  theme(  axis.ticks.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank()),
+     #     panel.background = element_blank()),
+ncol = 2
+)
+```
+
+##Final Thoughts
+Analysis of Chief Executive Officers (CEOs) compensation seems to show us that Males and Females has different average compensation distribution. Older females having higher average compensation and Males having a normal distribution, due to higher bonus observed for older females
